@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> <link rel="stylesheet" href="Style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rahat Shoes</title>
+
+<style>
+*{
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- CART BUTTON -->
+
+<button type="button" class="cart-button" onclick="toggleCart()">
+🛒 Cart (<span id="cartCount">0</span>)
+</button>
+
+
+<!-- SEARCH -->
+
+<div class="search-box">
+
+<input
+type="text"
+id="searchInput"
+placeholder="Search shoes..."
+>
+
+<button type="button" onclick="searchProducts()">
+🔍 Search
+</button>
+
+</div>
+
+
+<!-- CART -->
+
+<div id="cart">
+
+<h2>🛒 Your Cart</h2>
+
+<div id="cartItems">
+<p>Your cart is empty.</p>
+</div>
+
+<h3>
+Total: PKR <span id="cartTotal">0</span>
+</h3>
+
+<button type="button" onclick="openCheckout()">
+Checkout
+</button>
+
+<button type="button" class="close-btn" onclick="toggleCart()">
+Close
+</button>
+
+</div>
+
+
+<!-- HEADER -->
+
+<header>
+
+<h1>Rahat Shoes</h1>
+
+<nav>
+<a href="#">Home</a>
+<a href="#">Men</a>
+<a href="#">Women</a>
+<a href="#">Sandals</a>
+<a href="#">Boots</a>
+<a href="#">Contact</a>
+</nav>
+
+</header>
+
+
+<!-- HERO -->
+
+<section>
+
+<h2>New Summer Collection</h2>
+
+<p>Step Into Style & Comfort</p>
+
+<button type="button">
+Shop Now
+</button>
+
+</section>
+
+
+<!-- CATEGORIES -->
+
+<section>
+
+<h2>Shop By Category</h2>
+
+<div>
+<h3>Men's Shoes</h3>
+<button type="button">Shop Now</button>
+</div>
+
+<div>
+<h3>Women's Shoes</h3>
+<button type="button">Shop Now</button>
+</div>
+
+<div>
+<h3>Sandals</h3>
+<button type="button">Shop Now</button>
+</div>
+
+<div>
+<h3>Boots</h3>
+<button type="button">Shop Now</button>
+</div>
+
+</section>
+
+
+<!-- PRODUCTS -->
+
+<section id="products">
+
+<h2>Featured Products</h2>
+
+
+<div class="product">
+
+<img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80">
+
+<h3>Sports Sneakers</h3>
+
+<p>PKR 3499</p>
+
+<button type="button"
+onclick="addProduct('Sports Sneakers',3499)">
+Add to Cart
+</button>
+
+</div>
+
+
+<div class="product">
+
+<img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=600&q=80">
+
+<h3>Casual Sneakers</h3>
+
+<p>PKR 3199</p>
+
+<button type="button"
+onclick="addProduct('Casual Sneakers',3199)">
+Add to Cart
+</button>
+
+</div>
+
+
+<div class="product">
+
+<img src="https://images.unsplash.com/photo-1603487742131-4160ec999306?auto=format&fit=crop&w=600&q=80">
+
+<h3>Men Sandal</h3>
+
+<p>PKR 2299</p>
+
+<button type="button"
+onclick="addProduct('Men Sandal',2299)">
+Add to Cart
+</button>
+
+</div>
+
+
+<div class="product">
+
+<img src="https://images.unsplash.com/photo-1520639888713-7851133b1ed0?auto=format&fit=crop&w=600&q=80">
+
+<h3>Lindy Boots</h3>
+
+<p>PKR 5499</p>
+
+<button type="button"
+onclick="addProduct('Lindy Boots',5499)">
+Add to Cart
+</button>
+
+</div>
+
+</section>
+
+
+<!-- CHECKOUT -->
+
+<div id="checkout">
+
+<h2>📦 Checkout</h2>
+
+<input
+type="text"
+id="customerName"
+placeholder="Your Name"
+>
+
+<input
+type="tel"
+id="customerPhone"
+placeholder="Phone Number"
+>
+
+<input
+type="text"
+id="customerCity"
+placeholder="City"
+>
+
+<textarea
+id="customerAddress"
+rows="4"
+placeholder="Complete Address"
+></textarea>
+
+<br><br>
+
+<button
+type="button"
+class="order-btn"
+onclick="placeOrder()"
+>
+📲 Place Order on WhatsApp
+</button>
+
+<br><br>
+
+<button
+type="button"
+class="close-btn"
+onclick="closeCheckout()"
+>
+Cancel
+</button>
+
+</div>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+<h3>Rahat Shoes</h3>
+
+<p>Quality Shoes at Affordable Prices.</p>
+
+<p>© 2026 Rahat Shoes. All Rights Reserved.</p>
+
+</footer>
+
+
+<script>
+
+let cart = [];
+
+
+/* CART OPEN / CLOSE */
+
+function toggleCart(){
+
+    const cartBox =
+    document.getElementById("cart");
+
+    cartBox.classList.toggle("show");
+
+}
+
+
+/* ADD PRODUCT */
+
+function addProduct(name,price){
+
+    const existing =
+    cart.find(item => item.name === name);
+
+    if(existing){
+
+        existing.quantity++;
+
+    }else{
+
+        cart.push({
+            name:name,
+            price:price,
+            quantity:1
+        });
+
+    }
+
+    updateCart();
+
+    document
+    .getElementById("cart")
+    .classList.add("show");
+
+}
+
+
+/* UPDATE CART */
+
+function updateCart(){
+
+    const cartItems =
+    document.getElementById("cartItems");
+
+    const cartTotal =
+    document.getElementById("cartTotal");
+
+    const cartCount =
+    document.getElementById("cartCount");
+
+    cartItems.innerHTML="";
+
+    let total=0;
+    let count=0;
+
+
+    cart.forEach((item,index)=>{
+
+        const itemTotal =
+        item.price * item.quantity;
+
+        total += itemTotal;
+
+        count += item.quantity;
+
+
+        const div =
+        document.createElement("div");
+
+        div.className="cart-item";
+
+
+        div.innerHTML=`
+
+        <strong>${item.name}</strong>
+
+        <p>
+        PKR ${item.price.toLocaleString()}
+        </p>
+
+        <button
+        class="qty-btn"
+        onclick="changeQuantity(${index},-1)"
+        >
+        −
+        </button>
+
+        ${item.quantity}
+
+        <button
+        class="qty-btn"
+        onclick="changeQuantity(${index},1)"
+        >
+        +
+        </button>
+
+        <button
+        class="remove-btn"
+        onclick="removeProduct(${index})"
+        >
+        Remove
+        </button>
+
+        `;
+
+        cartItems.appendChild(div);
+
+    });
+
+
+    if(cart.length===0){
+
+        cartItems.innerHTML=
+        "<p>Your cart is empty.</p>";
+
+    }
+
+
+    cartTotal.innerText =
+    total.toLocaleString();
+
+    cartCount.innerText =
+    count;
+
+}
+
+
+/* QUANTITY */
+
+function changeQuantity(index,change){
+
+    cart[index].quantity += change;
+
+    if(cart[index].quantity <= 0){
+
+        cart.splice(index,1);
+
+    }
+
+    updateCart();
+
+}
+
+
+/* REMOVE */
+
+function removeProduct(index){
+
+    cart.splice(index,1);
+
+    updateCart();
+
+}
+
+
+/* SEARCH */
+
+function searchProducts(){
+
+    const search =
+    document
+    .getElementById("searchInput")
+    .value
+    .toLowerCase()
+    .trim();
+
+
+    const products =
+    document.querySelectorAll(".product");
+
+
+    products.forEach(product=>{
+
+        const name =
+        product
+        .querySelector("h3")
+        .innerText
+        .toLowerCase();
+
+
+        if(name.includes(search)){
+
+            product.style.display="inline-block";
+
+        }else{
+
+            product.style.display="none";
+
+        }
+
+    });
+
+}
+
+
+/* OPEN CHECKOUT */
+
+function openCheckout(){
+
+    if(cart.length===0){
+
+        alert("Your cart is empty!");
+
+        return;
+
+    }
+
+    document
+    .getElementById("checkout")
+    .style.display="block";
+
+}
+
+
+/* CLOSE CHECKOUT */
+
+function closeCheckout(){
+
+    document
+    .getElementById("checkout")
+    .style.display="none";
+
+}
+
+
+/* WHATSAPP ORDER */
+
+function placeOrder(){
+
+    const name =
+    document.getElementById("customerName")
+    .value.trim();
+
+    const phone =
+    document.getElementById("customerPhone")
+    .value.trim();
+
+    const city =
+    document.getElementById("customerCity")
+    .value.trim();
+
+    const address =
+    document.getElementById("customerAddress")
+    .value.trim();
+
+
+    if(!name || !phone || !city || !address){
+
+        alert("Please fill all information.");
+
+        return;
+
+    }
+
+
+    let message =
+    "New Order - Rahat Shoes\n\n";
+
+
+    message +=
+    "Name: " + name + "\n";
+
+    message +=
+    "Phone: " + phone + "\n";
+
+    message +=
+    "City: " + city + "\n";
+
+    message +=
+    "Address: " + address + "\n\n";
+
+
+    message +=
+    "Order Details:\n";
+
+
+    let total=0;
+
+
+    cart.forEach(item=>{
+
+        const itemTotal =
+        item.price * item.quantity;
+
+        total += itemTotal;
+
+
+        message +=
+        item.name +
+        " x " +
+        item.quantity +
+        " = PKR " +
+        itemTotal.toLocaleString() +
+        "\n";
+
+    });
+
+
+    message +=
+    "\nTotal: PKR " +
+    total.toLocaleString();
+
+
+    
+
+}
+
+</script>
+
+</body>
+</html>
